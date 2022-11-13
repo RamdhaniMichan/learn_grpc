@@ -1,0 +1,49 @@
+syntax="proto3";
+
+//Definisi Package di Golang. Ketika 
+//protobuf digenerate, maka akan mengikuti struktur folder
+//berikut
+option go_package="model/user";
+
+//Definisi package
+package user;
+
+//Request Payload
+message GreetingRequest{
+  string id = 1;
+  string name = 2;
+  string salutation = 3;
+}
+
+//Response Payload
+message GreetingResponse{
+  string GreetingMessage = 1;
+}
+
+message Greetings{
+    repeated GreetingRequest greetings = 1;
+}
+
+message GreetingAllRequest{
+    
+}
+
+message GreetingRequestID{
+    string id = 1;
+}
+
+message GreetingResponseID{
+    string name = 1;
+    string salutation = 2;
+}
+
+
+
+//Define RPC service
+service UserService{
+  rpc GreetUser(GreetingRequest) returns (GreetingResponse);
+  rpc GreetAllUser(GreetingAllRequest) returns (Greetings);
+  rpc GreetByID(GreetingRequestID) returns (GreetingResponseID);
+  rpc GreetDeleteByID(GreetingRequestID) returns (GreetingResponse);
+  rpc GreetUpdate(GreetingRequest) returns (GreetingResponse);
+}
